@@ -1,19 +1,23 @@
 # Air的配置文件，格式为TOML
 
 # 工作目录
-# . 或绝对路径，请注意后面的目录必须在根目录下。
+# . 或绝对路径，请注意后面的目录必须在root下。
 root = "."
 # air在运行时存储临时文件的目录
 tmp_dir = "/tmp/air"
 
 [build]
 # 每次构建前要运行的命令数组
-pre_cmd = []
+# pre_cmd = []
+pre_cmd = ["echo 'hello air' > pre_cmd.txt"]
 # 普通的shell命令。你也可以使用`make`。
+# cmd = "go build -o ./tmp/main ."
 cmd = "make build BINS=mb-apiserver"
 # ^C后要运行的命令数组
-post_cmd = []
+# post_cmd = []
+post_cmd = ["echo 'hello air' > post_cmd.txt"]
 # 从`cmd`得到的二进制文件。
+# bin = "tmp/main"
 bin = "_output/platforms/linux/amd64/mb-apiserver"
 # 自定义二进制文件，可以在运行应用程序时设置环境变量。
 #full_bin = "APP_ENV=dev APP_USER=air ./tmp/main"
