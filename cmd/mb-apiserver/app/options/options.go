@@ -21,12 +21,23 @@ import (
 	"github.com/onexstack/miniblog/internal/apiserver"
 )
 
+/*
+在 miniblog 项目的应用构建模型中，会在 cmd/mb-apiserver/app/options 目录中存放跟配置项相关的代码，
+例如：创建默认的配置项、配置项校验、配置项绑定命令行选项等。通过目录级别的隔离，可以提高代码的可维护性。
+*/
+
 // 定义支持的服务器模式集合.
 var availableServerModes = sets.New(
 	apiserver.GinServerMode,
 	apiserver.GRPCServerMode,
 	apiserver.GRPCGatewayServerMode,
 )
+
+/*
+定义应用配置项结构体类型之后，还需要提供一种途径来给配置项结构体中各个字段设置期望的值。
+在 Go 项目开发中，有三种方式，来给这些配置项设置值：
+创建默认的配置项、通过命令行选项设置配置项、通过配置文件设置配置项。
+*/
 
 // ServerOptions 包含服务器配置选项.
 type ServerOptions struct {
@@ -47,6 +58,12 @@ type ServerOptions struct {
 	// MySQLOptions 包含 MySQL 配置选项.
 	MySQLOptions *genericoptions.MySQLOptions `json:"mysql" mapstructure:"mysql"`
 }
+
+/*
+默认值不仅为开发者和运维人员提供了参考，有助于理解和管理配置项，
+还允许用户通过环境变量、命令行选项或配置文件灵活覆盖默认值。
+而且，默认值通常反映最常见或推荐的设置，能够作为文档说明的重要补充，从而提升配置的可读性，使应用更易操作和维护。
+*/
 
 // NewServerOptions 创建带有默认值的 ServerOptions 实例.
 func NewServerOptions() *ServerOptions {

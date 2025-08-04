@@ -82,3 +82,43 @@ func filePath() string {
 	cobra.CheckErr(err)
 	return filepath.Join(home, defaultHomeDir, defaultConfigName)
 }
+
+/*
+Viper 会按照以下顺序覆盖配置值（后出现的优先级更高）：
+
+​​默认值​​（如果 opts 结构体字段有默认值）
+​​配置文件​​（通过 viper.ReadInConfig() 加载）
+​​环境变量​
+
+配置文件​​：
+viper.SetConfigFile(configFile)
+viper.ReadInConfig()             // 读取到 Viper 的配置存储
+假设 config.yaml 内容：
+server:
+  port: 8080
+  timeout: 10s
+
+
+环境变量​​：
+viper.SetEnvPrefix("FASTGO")
+viper.AutomaticEnv()
+假设设置了环境变量：
+export FASTGO_SERVER_PORT=9090
+export FASTGO_SERVER_TIMEOUT=5s
+
+
+最终结果​​
+viper.Unmarshal(opts)
+opts.Server.Port → 9090（环境变量覆盖配置文件）
+opts.Server.Timeout → 5s（环境变量覆盖配置文件）
+
+
+结构体定义​​
+type Options struct {
+    Server struct {
+        Port    int    `mapstructure:"port"`    // Viper 默认用 mapstructure 标签
+        Timeout string `mapstructure:"timeout"`
+    }
+}
+
+*/

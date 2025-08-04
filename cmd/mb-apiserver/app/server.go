@@ -72,6 +72,7 @@ The project features include:
 	// 推荐使用配置文件来配置应用，便于管理配置项
 	cmd.PersistentFlags().StringVarP(&configFile, "config", "c", filePath(), "Path to the miniblog configuration file.")
 
+	// 在实际的 Go 应用开发中，可以通过将配置项绑定到某个命令行选项，从而通过命令行选项来设置配置项的值，进而在程序中使用这些配置项。
 	// 将 ServerOptions 中的选项绑定到命令标志
 	opts.AddFlags(cmd.PersistentFlags())
 
@@ -95,13 +96,14 @@ func run(opts *options.ServerOptions) error {
 		return fmt.Errorf("failed to unmarshal configuration: %w", err)
 	}
 
+	// fmt.Printf("测试viper.AllSettings函数: %+v\n", viper.AllSettings())
+
 	// 校验命令行选项
 	if err := opts.Validate(); err != nil {
 		return fmt.Errorf("invalid options: %w", err)
 	}
 
-	// 获取应用配置.
-	// 将命令行选项和应用配置分开，可以更加灵活的处理 2 种不同类型的配置.
+	// 基于初始化配置来创建运行时配置，进而基于运行时配置创建出一个服务实例，并运行服务实例。
 	cfg, err := opts.Config()
 	if err != nil {
 		return fmt.Errorf("failed to load configuration: %w", err)
