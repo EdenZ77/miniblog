@@ -70,5 +70,13 @@ MAKEFLAGS += --no-print-directory
 endif
 
 # Linux 命令设置
+# 定义了一个增强版的 find 命令
+# find .：从当前目录开始查找
+# ! -path './third_party/*'：排除 third_party目录下的所有文件
+# ! -path './vendor/*'：排除 vendor目录下的所有文件
+# ​​目的​​：避免格式化第三方依赖的代码，只格式化项目自己的代码
 FIND := find . ! -path './third_party/*' ! -path './vendor/*'
+# 定义了一个增强版的 xargs 命令
+# --no-run-if-empty：如果没有输入文件，则不执行后面的命令
+# 目的​​：安全处理没有找到 Go 文件的情况
 XARGS := xargs --no-run-if-empty

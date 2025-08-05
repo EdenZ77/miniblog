@@ -19,7 +19,9 @@ ifeq ($(origin GOBIN), undefined)
 	GOBIN := $(GOPATH)/bin
 endif
 
+# 获取项目 cmd/ 目录下的所有子目录（排除.md文件）：/path/to/project/cmd/miniblog /path/to/project/cmd/miniblogctl
 COMMANDS ?= $(filter-out %.md, $(wildcard $(PROJ_ROOT_DIR)/cmd/*))
+# 将完整路径列表转换为可执行文件名列表：miniblog miniblogctl
 BINS ?= $(foreach cmd,${COMMANDS},$(notdir $(cmd)))
 
 ifeq ($(COMMANDS),)
@@ -29,9 +31,16 @@ ifeq ($(BINS),)
   $(error Could not determine BINS, set PROJ_ROOT_DIR or run in source dir)
 endif
 
+# 检查系统是否安装了 Go 工具链
 go.build.verify:
 	@if ! which go &>/dev/null; then echo "Cannot found go compile tool. Please install go tool first."; exit 1; fi
 
+# go.build.%目标定义是 Makefile 中非常强大的模式规则（Pattern Rule），用于实现多平台交叉编译的自动化。
+# 例如：当目标为 go.build.linux_amd64.miniblog时：
+# 		%匹配 linux_amd64.miniblog，后续通过字符串处理提取平台和命令名
+
+## 目标 go.build.linux_amd64.miniblog→ $*= linux_amd64.miniblog
+## 将点号替换为空格：linux_amd64 miniblog
 go.build.%: ## 编译 Go 源码.
 	$(eval COMMAND := $(word 2,$(subst ., ,$*)))
 	$(eval PLATFORM := $(word 1,$(subst ., ,$*)))
@@ -43,8 +52,12 @@ go.build.%: ## 编译 Go 源码.
 		-o $(OUTPUT_DIR)/platforms/$(OS)/$(ARCH)/$(COMMAND)$(GO_OUT_EXT) \
 		$(ROOT_PACKAGE)/cmd/$(COMMAND)
 
+# 内层 addprefix 将 BINS 列表中的每个元素添加平台前缀：linux_amd64.miniblog linux_amd64.miniblogctl
+# 外层 addprefix 为每个平台+命令组合添加 go.build.前缀：go.build.linux_amd64.miniblog go.build.linux_amd64.miniblogctl
 go.build: go.build.verify $(addprefix go.build., $(addprefix $(PLATFORM)., $(BINS))) # 根据指定的平台编译源码.
 
+# gofmt参数​​：-s：简化代码（去除冗余结构）
+# -w：直接修改文件（而不是输出到终端）
 go.format: tools.verify.goimports ## 格式化 Go 源码.
 	@echo "===========> Running formaters to format codes"
 	@$(FIND) -type f -name '*.go' | $(XARGS) gofmt -s -w

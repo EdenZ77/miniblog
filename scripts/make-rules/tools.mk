@@ -45,4 +45,4 @@ install.protolint:
 # 伪目标（防止文件与目标名称冲突）
 .PHONY: tools.verify tools.install tools.install.% tools.verify.% install.golangci-lint \
 	install.goimports install.protoc-plugins install.swagger \
-	install.addlicense install.protoc-go-inject-tag protolint
+	install.addlicense install.protoc-go-inject-tag install.protolint
