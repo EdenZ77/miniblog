@@ -380,8 +380,6 @@ github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 h1:C3w9PqII01/Oq
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
-github.com/onexstack/onexstack v0.0.1 h1:t9EsJwjdNBO0ml8L0hsUSWBF65kv/Uz0tQtS7edVlqg=
-github.com/onexstack/onexstack v0.0.1/go.mod h1:5Pp2aMiVEJarNi9XKTlutNYTx/ML/DJgbVNfeCLlfNU=
 github.com/onexstack/protoc-gen-defaults v0.0.2 h1:78IlQN+S2xYJaCFJLusyMT9/oe+7Fau5rWdZNDLjiIw=
 github.com/onexstack/protoc-gen-defaults v0.0.2/go.mod h1:tw6NI/kDR5KxC620Q3Q3rirHiBNuQdTd2jL855D7x9I=
 github.com/pelletier/go-toml/v2 v2.0.1/go.mod h1:r9LEWfGN8R5k0VXJ+0BkIe7MYkRdwZOjgMj2KwnJFUo=
