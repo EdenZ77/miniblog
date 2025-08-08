@@ -53,6 +53,7 @@ ifeq ($(origin PLATFORM), undefined)
 	PLATFORM := $(GOOS)_$(GOARCH)
 	# 构建镜像时，使用 linux 作为默认的 OS
 	IMAGE_PLAT := linux_$(GOARCH)
+	DUMMY := $(info ===========> common.mk PLATFORM undefined: $(PLATFORM))
 else
 	GOOS := $(word 1, $(subst _, ,$(PLATFORM)))
 	GOARCH := $(word 2, $(subst _, ,$(PLATFORM)))

@@ -34,6 +34,8 @@ export USAGE_OPTIONS
 build: go.tidy  ## 编译源码，依赖 tidy 目标自动添加/移除依赖包.
 	@$(MAKE) go.build
 
+# build: go.tidy go.build
+
 ## --------------------------------------
 ## Testing
 ## --------------------------------------

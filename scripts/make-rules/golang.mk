@@ -56,8 +56,16 @@ go.build.%: ## 编译 Go 源码.
 # 外层 addprefix 为每个平台+命令组合添加 go.build.前缀：go.build.linux_amd64.miniblog go.build.linux_amd64.miniblogctl
 go.build: go.build.verify $(addprefix go.build., $(addprefix $(PLATFORM)., $(BINS))) # 根据指定的平台编译源码.
 
-# gofmt参数​​：-s：简化代码（去除冗余结构）
-# -w：直接修改文件（而不是输出到终端）
+# -type f：只搜索文件（不包括目录）
+# gofmt是 Go 语言官方提供的格式化工具​​：-s：简化代码（去除冗余结构）-w：直接修改文件（而不是输出到终端）
+# goimports是比 gofmt 更强大的格式化工具（需额外安装）：自动添加缺失的 import，删除未使用的 import
+# -local 此选项使导入分组时区分项目内部包和第三方包，例如下面所示：
+# import (
+# 	"fmt"
+# 	"strings"
+	
+# 	"github.com/onexstack/miniblog/pkg/util" // 项目内部包分组
+# )
 go.format: tools.verify.goimports ## 格式化 Go 源码.
 	@echo "===========> Running formaters to format codes"
 	@$(FIND) -type f -name '*.go' | $(XARGS) gofmt -s -w
