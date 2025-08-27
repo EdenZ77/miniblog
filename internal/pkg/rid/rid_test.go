@@ -44,7 +44,8 @@ func TestResourceID_New(t *testing.T) {
 }
 
 func BenchmarkResourceID_New(b *testing.B) {
-	// 性能测试
+	// 参数 b *testing.B是基准测试的上下文对象，提供了控制基准测试的方法
+	// 重置基准测试的计时器，ResetTimer()会忽略之前的所有操作耗时，从此刻开始计时
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		userID := rid.UserID

@@ -61,9 +61,14 @@ var (
 // Init 初始化全局的日志对象.
 func Init(opts *Options) {
 	// 因为会给全局变量 std 赋值，所以这里对 std 变量加锁，防止出现并发问题.
+
+	// 在 Go 程序中，多个 goroutine 可能同时（并发地）执行。
+	// 如果两个或多个 goroutine 同时调用 Init 函数，它们就会同时尝试修改同一个全局变量 std。
 	mu.Lock()
 	defer mu.Unlock()
 
+	// 不会​​出现“加锁的goroutine修改std到一半的时候，外面使用std时只有一半的值被更新了”的情况，因为指针赋值是原子的。
+	// std变量是一个指向zapLogger的指针（即*zapLogger），因此对std的赋值操作（std = New(opts)）是原子的。
 	std = New(opts)
 }
 
